@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600&display=swap');
+
+/* 🌿 Signature Drinks Section */
+.signature-drinks {
+  text-align: center;
+  padding: 70px 60px;
+  background: linear-gradient(180deg, #f6f4e6 20%, #e0f0dc 100%);
+}
+
+.drinks-title {
+  font-family: 'Pacifico', cursive;
+  color: #174f2c;
+  font-size: 38px; /* smaller */
+  margin-bottom: 8px;
+}
+
+.drinks-subtitle {
+  font-family: 'Poppins', sans-serif;
+  color: #4b8b3b;
+  font-size: 16px;
+  margin-bottom: 45px;
+  letter-spacing: 0.8px;
+}
+
+.drinks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 40px;
+  justify-items: center;
+}
+
+/* 🌸 Card Style */
+.drink-card {
+  background: #ffffffc9;
+  backdrop-filter: blur(10px);
+  width: 260px;
+  text-align: center;
+  transition: all 0.4s ease;
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
+}
+
+.drink-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(75, 139, 59, 0.25);
+}
+
+/* 🪷 Arched Image */
+.drink-image {
+  width: 100%;
+  height: 280px;
+  background-color: #fff;
+  border-radius: 120px 120px 0 0;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 18px;
+}
+
+.drink-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: all 0.4s ease;
+}
+
+.drink-image img:hover {
+  transform: scale(1.05);
+}
+
+/* 🍵 Text */
+.drink-card h3 {
+  font-family: 'Poppins', sans-serif;
+  color: #174f2c;
+  font-size: 19px;
+  margin-bottom: 6px;
+}
+
+.drink-card p {
+  font-family: 'Poppins', sans-serif;
+  color: #2d5a3f;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  padding: 0 8px;
+}
+
+/* 🌿 Button */
+.drink-btn {
+  background-color: #4b8b3b;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 22px;
+  font-size: 14px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 10px rgba(75, 139, 59, 0.3);
+}
+
+.drink-btn:hover {
+  background-color: #174f2c;
+  transform: translateY(-3px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .signature-drinks {
+    padding: 50px 20px;
+  }
+
+  .drinks-title {
+    font-size: 32px;
+  }
+
+  .drinks-subtitle {
+    font-size: 15px;
+  }
+
+  .drink-card {
+    width: 85%;
+  }
+}

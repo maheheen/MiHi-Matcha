@@ -1,0 +1,158 @@
+.home-page .our-story {
+  margin: 0;
+  margin-top: 0 !important;
+}
+.our-story {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 50px 90px;
+  background: linear-gradient(120deg, #f6f4e6 20%, #e0f0dc 90%);
+  /* border-radius: 35px; */
+  margin: 80px auto;
+  gap: 50px;
+  overflow: hidden;
+}
+
+.story-image img {
+  width: 360px;
+  border-radius: 25px;
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.5s ease;
+}
+
+.story-image img:hover {
+  transform: scale(1.05) rotate(-2deg);
+}
+
+.story-content {
+  max-width: 490px;
+}
+
+.story-title {
+  font-family: 'Pacifico', cursive;
+  color: #174f2c;
+  font-size: 36px;
+  margin-bottom: 15px;
+}
+
+.story-text {
+  font-family: 'Poppins', sans-serif;
+  color: #2d5a3f;
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+.story-btn {
+  background-color: #4b8b3b;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 26px;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(75, 139, 59, 0.3);
+  transition: all 0.3s ease;
+}
+
+.story-btn:hover {
+  background-color: #174f2c;
+  transform: translateY(-3px);
+}
+
+/* Tablet Responsiveness */
+@media (max-width: 1024px) {
+  .our-story {
+    padding: 40px 50px;
+    margin: 60px auto;
+    gap: 35px;
+  }
+
+  .story-image img {
+    width: 300px;
+  }
+
+  .story-content {
+    max-width: 420px;
+  }
+
+  .story-title {
+    font-size: 32px;
+  }
+
+  .story-text {
+    font-size: 15px;
+  }
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .our-story {
+    flex-direction: column;
+    padding: 35px 25px;
+    margin: 40px 20px;
+    gap: 30px;
+    border-radius: 25px;
+  }
+
+  .story-image {
+    width: 100%;
+    text-align: center;
+  }
+
+  .story-image img {
+    width: 100%;
+    max-width: 350px;
+  }
+
+  .story-content {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .story-title {
+    font-size: 28px;
+    margin-bottom: 12px;
+  }
+
+  .story-text {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
+
+  .story-btn {
+    width: 100%;
+    max-width: 250px;
+    padding: 14px 30px;
+    font-size: 16px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .our-story {
+    padding: 25px 15px;
+    margin: 30px 15px;
+    border-radius: 20px;
+  }
+
+  .story-image img {
+    max-width: 280px;
+  }
+
+  .story-title {
+    font-size: 24px;
+  }
+
+  .story-text {
+    font-size: 13px;
+  }
+
+  .story-btn {
+    font-size: 14px;
+    padding: 12px 25px;
+  }
+}

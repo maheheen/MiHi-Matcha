@@ -1,0 +1,240 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;500;600&display=swap');
+
+.footer {
+  background: linear-gradient(135deg, #f6f4e6 0%, #e8f5e9 100%);
+  padding: 60px 40px 20px;
+  color: #174f2c;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #4b8b3b, #6ba85a, #4b8b3b);
+}
+
+.footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.footer-section h3 {
+  font-family: 'Pacifico', cursive;
+  color: #4b8b3b;
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.footer-section p {
+  line-height: 1.8;
+  color: #2c5f2d;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footer-links li {
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #174f2c;
+  font-size: 14px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  position: relative;
+}
+
+.footer-links a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px;
+  left: 0;
+  background-color: #4b8b3b;
+  transition: width 0.3s ease;
+}
+
+.footer-links a:hover {
+  color: #4b8b3b;
+  transform: translateX(5px);
+}
+
+.footer-links a:hover::after {
+  width: 100%;
+}
+
+.social-icons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.social-icons a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border-radius: 50%;
+  color: #4b8b3b;
+  font-size: 18px;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(75, 139, 59, 0.2);
+}
+
+.social-icons a:hover {
+  background-color: #4b8b3b;
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(75, 139, 59, 0.4);
+}
+
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.newsletter-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #d4e7d4;
+  border-radius: 25px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s ease;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.newsletter-input:focus {
+  border-color: #4b8b3b;
+  box-shadow: 0 0 0 3px rgba(75, 139, 59, 0.1);
+}
+
+.newsletter-btn {
+  width: 100%;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #4b8b3b, #6ba85a);
+  color: #fff;
+  border: none;
+  border-radius: 25px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.newsletter-btn:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(75, 139, 59, 0.3);
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-top: 30px;
+  border-top: 1px solid rgba(75, 139, 59, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.footer-bottom p {
+  color: #2c5f2d;
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-logo-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+}
+
+.footer-brand {
+  font-family: 'Poppins', sans-serif;
+  font-size: 18px;
+  color: #174f2c;
+  margin: 0;
+}
+
+.footer-brand-green {
+  font-family: 'Pacifico', cursive;
+  color: #4b8b3b;
+}
+
+.payment-icons {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.payment-icons i {
+  font-size: 24px;
+  color: #2c5f2d;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.payment-icons i:hover {
+  opacity: 1;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .footer {
+    padding: 40px 20px 20px;
+  }
+
+  .footer-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .footer-bottom {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .newsletter-btn {
+    width: 100%;
+  }
+}
