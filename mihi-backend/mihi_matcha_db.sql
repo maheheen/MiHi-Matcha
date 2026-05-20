@@ -98,6 +98,12 @@ CREATE TABLE order_items (
 INSERT INTO users (name, email, password, role) VALUES
 ('Admin', 'admin@mihimatcha.com', '$2b$10$rHZTKGXwMxVDPKvXq5O5qeMpLZ3qQ4YvCvGZ7UNqWM6DqF3lLqHQG', 'admin');
 
+
+DELETE FROM users WHERE email = 'admin@mihimatcha.com';
+
+INSERT INTO users (name, email, password, role) VALUES
+('Admin', 'admin@mihimatcha.com', '$argon2id$v=19$m=65536,t=3,p=4$WkWp4+hql4roYfheKUM3ew$TRq9lwIInufX+Z2QLb0Mu1Yy6JEAYeTUYN0NY0urZX0', 'admin');
+
 -- Insert Sample Customer (password: customer123)
 INSERT INTO users (name, email, password, role) VALUES
 ('Abdullah Khan', 'abdullah@email.com', '$2b$10$rHZTKGXwMxVDPKvXq5O5qeMpLZ3qQ4YvCvGZ7UNqWM6DqF3lLqHQG', 'customer');

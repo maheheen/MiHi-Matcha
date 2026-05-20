@@ -32,8 +32,8 @@ const Drinks = () => {
               </div>
               <h3>{drink.name}</h3>
               <p>
-                {drink.name === "Classic Matcha" && "Smooth, creamy, and perfectly balanced for sunny days."}
-                {drink.name === "Vanilla Matcha Latte" && "Silky cream swirls with matcha perfection."}
+                {drink.name === "Classic Matcha" && "Smooth, creamy, and perfectly balanced — our timeless classic brewed fresh for every sip, every single day."}
+                {drink.name === "Vanilla Matcha Latte" && "Silky vanilla cream swirls meet our premium matcha — rich, aromatic, and indulgently smooth in every cup."}
                 {drink.name === "Strawberry Matcha Latte" && "Earthy matcha meets sweet strawberries — a divine dessert sip."}
                 {!["Classic Matcha", "Vanilla Matcha Latte", "Strawberry Matcha Latte"].includes(drink.name) && "Delicious matcha latte made with premium ingredients."}
               </p>

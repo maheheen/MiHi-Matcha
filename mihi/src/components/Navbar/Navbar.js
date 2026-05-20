@@ -44,7 +44,7 @@ const Navbar = () => {
           <li><Link to="/">Home</Link></li>
           <li><Link to="/menu">Menu</Link></li>
           <li><Link to="/about">About</Link></li>
-          <li><a href="#contact">Contact</a></li>
+          {/* <li><a href="#contact">Contact</a></li> */}
           {user?.role === 'admin' && <li><Link to="/admin/dashboard">Admin</Link></li>}
         </ul>
       </div>

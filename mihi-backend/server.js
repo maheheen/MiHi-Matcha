@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql2');
-const bcrypt = require('bcrypt');
+const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -10,11 +10,11 @@ const PORT = 5000;
 const SECRET = "mihi_matcha_secret_key";
 
 // Middleware
-app.use(cors());
-app.use(express.json({ limit: '100mb' }));  // Increased for base64 images
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
+app.use(express.json({ limit: '100mb' }));
 app.use(express.urlencoded({ limit: '100mb', extended: true }));
 
-// Serve static files (images)
+// Serve static files
 app.use('/uploads', express.static('uploads'));
 
 // Database connection pool
@@ -45,84 +45,68 @@ app.listen(PORT, () => {
 // AUTHENTICATION ROUTES
 // ==========================================
 
-// Register new user
-app.post('/api/auth/register', (req, res) => {
+// Register
+app.post('/api/auth/register', async (req, res) => {
     const { name, email, password, role } = req.body;
 
-    // Check if user exists
-    const checkQuery = "SELECT * FROM users WHERE email = ?";
-    
-    pool.query(checkQuery, [email], (err, result) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({ success: false, message: 'Database error' });
-        }
+    try {
+        const checkQuery = "SELECT * FROM users WHERE email = ?";
+        const [result] = await pool.promise().query(checkQuery, [email]);
 
         if (result.length > 0) {
-            return res.status(400).json({ 
-                success: false, 
-                message: 'User already exists with this email' 
+            return res.status(400).json({
+                success: false,
+                message: 'User already exists with this email'
             });
         }
 
-        // Hash password synchronously (NO async/await!)
-        const hashedPassword = bcrypt.hashSync(password, 10);
+        const hashedPassword = await argon2.hash(password);
 
-        // Insert new user
         const insertQuery = "INSERT INTO users (name, email, password, role) VALUES (?, ?, ?, ?)";
-        
-        pool.query(insertQuery, [name, email, hashedPassword, role || 'customer'], (err, insertResult) => {
-            if (err) {
-                console.log(err);
-                return res.status(500).json({ success: false, message: 'Registration failed' });
-            }
+        const [insertResult] = await pool.promise().query(insertQuery, [name, email, hashedPassword, role || 'customer']);
 
-            return res.status(201).json({
-                success: true,
-                message: 'User registered successfully',
-                user: {
-                    id: insertResult.insertId,
-                    name: name,
-                    email: email,
-                    role: role || 'customer'
-                }
-            });
+        return res.status(201).json({
+            success: true,
+            message: 'User registered successfully',
+            user: {
+                id: insertResult.insertId,
+                name,
+                email,
+                role: role || 'customer'
+            }
         });
-    });
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ success: false, message: 'Registration failed' });
+    }
 });
 
-// Login user
-app.post('/api/auth/login', (req, res) => {
+// Login
+app.post('/api/auth/login', async (req, res) => {
     const { email, password } = req.body;
 
-    const query = "SELECT * FROM users WHERE email = ?";
-
-    pool.query(query, [email], (err, result) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({ success: false, message: 'Database error' });
-        }
+    try {
+        const query = "SELECT * FROM users WHERE email = ?";
+        const [result] = await pool.promise().query(query, [email]);
 
         if (result.length === 0) {
-            return res.status(401).json({ 
-                success: false, 
-                message: 'Invalid email or password' 
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid email or password'
             });
         }
 
         const user = result[0];
+        const isMatch = await argon2.verify(user.password, password);
 
-        // Check password synchronously (NO async/await!)
-        const isMatch = bcrypt.compareSync(password, user.password);
-        
         if (!isMatch) {
-            return res.status(401).json({ 
-                success: false, 
-                message: 'Invalid email or password' 
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid email or password'
             });
         }
 
-        // Create JWT token
         const token = jwt.sign(
             { id: user.id, role: user.role },
             SECRET,
@@ -131,7 +115,7 @@ app.post('/api/auth/login', (req, res) => {
 
         return res.status(200).json({
             success: true,
-            token: token,
+            token,
             user: {
                 id: user.id,
                 name: user.name,
@@ -139,7 +123,11 @@ app.post('/api/auth/login', (req, res) => {
                 role: user.role
             }
         });
-    });
+
+    } catch (err) {
+        console.log(err);
+        return res.status(500).json({ success: false, message: 'Database error' });
+    }
 });
 
 // ==========================================
@@ -175,10 +163,7 @@ app.get('/api/products/:id', (req, res) => {
         }
 
         if (result.length === 0) {
-            return res.status(404).json({ 
-                success: false, 
-                message: 'Product not found' 
-            });
+            return res.status(404).json({ success: false, message: 'Product not found' });
         }
 
         return res.status(200).json({
@@ -188,7 +173,7 @@ app.get('/api/products/:id', (req, res) => {
     });
 });
 
-// Create new product (admin only)
+// Create new product
 app.post('/api/products', (req, res) => {
     const { name, description, base_price, image_url } = req.body;
 
@@ -214,7 +199,7 @@ app.post('/api/products', (req, res) => {
     });
 });
 
-// Update product (admin only)
+// Update product
 app.put('/api/products/:id', (req, res) => {
     const productId = req.params.id;
     const { name, description, base_price, image_url, is_active } = req.body;
@@ -236,11 +221,9 @@ app.put('/api/products/:id', (req, res) => {
     });
 });
 
-// Delete product (admin only)
+// Delete product
 app.delete('/api/products/:id', (req, res) => {
     const productId = req.params.id;
-
-    // Soft delete - set is_active to false
     const query = "UPDATE products SET is_active = false WHERE id = ?";
 
     pool.query(query, [productId], (err, result) => {
@@ -264,7 +247,6 @@ app.delete('/api/products/:id', (req, res) => {
 app.post('/api/orders', (req, res) => {
     const { customer_name, customer_email, customer_phone, delivery_address, items, total_amount } = req.body;
 
-    // Insert order
     const orderQuery = `INSERT INTO orders 
                         (customer_name, customer_email, customer_phone, delivery_address, total_amount, status) 
                         VALUES (?, ?, ?, ?, ?, 'pending')`;
@@ -276,29 +258,25 @@ app.post('/api/orders', (req, res) => {
         }
 
         const orderId = orderResult.insertId;
-
-        // Insert order items
         let insertedItems = 0;
+
         items.forEach((item) => {
             const itemQuery = `INSERT INTO order_items 
                                (order_id, product_id, product_name, size, quantity, price) 
                                VALUES (?, ?, ?, ?, ?, ?)`;
 
             pool.query(itemQuery, [orderId, item.product_id, item.product_name, item.size, item.quantity, item.price], (err) => {
-                if (err) {
-                    console.log(err);
-                }
+                if (err) console.log(err);
 
                 insertedItems++;
 
-                // When all items are inserted, send response
                 if (insertedItems === items.length) {
                     return res.status(201).json({
                         success: true,
                         message: 'Order placed successfully',
                         order: {
                             id: orderId,
-                            total_amount: total_amount,
+                            total_amount,
                             status: 'pending'
                         }
                     });
@@ -308,7 +286,7 @@ app.post('/api/orders', (req, res) => {
     });
 });
 
-// Get all orders (for admin dashboard)
+// Get all orders
 app.get('/api/orders', (req, res) => {
     const query = `SELECT o.*, COUNT(oi.id) as item_count 
                    FROM orders o 
@@ -329,11 +307,9 @@ app.get('/api/orders', (req, res) => {
     });
 });
 
-// Get single order with items
+// Get single order
 app.get('/api/orders/:id', (req, res) => {
     const orderId = req.params.id;
-
-    // Get order details
     const orderQuery = "SELECT * FROM orders WHERE id = ?";
 
     pool.query(orderQuery, [orderId], (err, orderResult) => {
@@ -346,7 +322,6 @@ app.get('/api/orders/:id', (req, res) => {
             return res.status(404).json({ success: false, message: 'Order not found' });
         }
 
-        // Get order items
         const itemsQuery = "SELECT * FROM order_items WHERE order_id = ?";
 
         pool.query(itemsQuery, [orderId], (err, itemsResult) => {
@@ -360,17 +335,16 @@ app.get('/api/orders/:id', (req, res) => {
 
             return res.status(200).json({
                 success: true,
-                order: order
+                order
             });
         });
     });
 });
 
-// Update order status (admin only)
+// Update order status
 app.patch('/api/orders/:id/status', (req, res) => {
     const orderId = req.params.id;
     const { status } = req.body;
-
     const query = "UPDATE orders SET status = ? WHERE id = ?";
 
     pool.query(query, [status, orderId], (err, result) => {

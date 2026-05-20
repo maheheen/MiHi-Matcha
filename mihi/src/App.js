@@ -13,7 +13,7 @@ import CartSidebar from "./components/CartSidebar/CartSidebar";
 
 function App() {
   return (
-    <div className='App-header'>
+    <div>
       <CartProvider>
         <Router>
           <Navbar />

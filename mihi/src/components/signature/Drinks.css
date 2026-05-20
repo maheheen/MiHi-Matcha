@@ -22,14 +22,28 @@
   letter-spacing: 0.8px;
 }
 
+/* Replace the existing .drinks-grid rule */
 .drinks-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(3, 260px);
   gap: 40px;
-  justify-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 900px) {
+  .drinks-grid {
+    grid-template-columns: repeat(2, 260px);
+  }
+}
+
+@media (max-width: 600px) {
+  .drinks-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* 🌸 Card Style */
+/* Replace .drink-card */
 .drink-card {
   background: #ffffffc9;
   backdrop-filter: blur(10px);
@@ -39,11 +53,27 @@
   padding: 20px;
   border-radius: 18px;
   box-shadow: 0 5px 14px rgba(0, 0, 0, 0.08);
+  
+  /* ADD THESE */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .drink-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 10px 25px rgba(75, 139, 59, 0.25);
+}
+
+/* ADD THIS - pushes button to bottom */
+.drink-card p {
+  flex: 1;
+  font-family: 'Poppins', sans-serif;
+  color: #2d5a3f;
+  font-size: 14px;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  padding: 0 8px;
 }
 
 /* 🪷 Arched Image */
