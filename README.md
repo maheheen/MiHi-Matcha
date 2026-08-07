@@ -27,14 +27,17 @@ A full-stack matcha e-commerce platform — browse the menu, add drinks to your 
 - express-validator for request validation
 
 ## Project Structure
+
+```
 MiHi-Matcha/
-├── mihi/ # React frontend
-│ └── src/
-│ ├── components/ # ProductCard, CartSidebar, Checkout, AdminDashboard, LoginSignup...
-│ └── context/ # AuthContext, CartContext, ProductContext
-└── mihi-backend/ # Express API
-├── server.js
-└── mihi_matcha_db.sql
+├── mihi/              # React frontend
+│   └── src/
+│       ├── components/  # ProductCard, CartSidebar, Checkout, AdminDashboard, LoginSignup...
+│       └── context/      # AuthContext, CartContext, ProductContext
+└── mihi-backend/       # Express API
+    ├── server.js
+    └── mihi_matcha_db.sql
+```
 
 
 
